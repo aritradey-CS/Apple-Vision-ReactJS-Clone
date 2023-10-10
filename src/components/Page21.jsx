@@ -19,8 +19,8 @@ function Page21() {
           <h1>Responsive, precision eye tracking.</h1>
           <p>
             A high-performance eye tracking system of
-            <span class="highlight-page21">LEDs</span> and
-            <span class="highlight-page21">infrared cameras</span>
+            <span className="highlight-page21">LEDs</span> and
+            <span className="highlight-page21">infrared cameras</span>
             projects invisible light patterns onto each eye. This advanced
             system provides ultraprecise input without your needing to hold any
             controllers, so you can accurately select elements just by looking

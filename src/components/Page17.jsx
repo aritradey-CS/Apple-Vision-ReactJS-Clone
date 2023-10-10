@@ -10,7 +10,7 @@ function Page17() {
           see, hear, and feel.
         </h1>
         <p>
-          <span class="highlight-page17"
+          <span className="highlight-page17"
             >Pushing boundaries from the inside out.</span
           >Spatial experiences on Apple Vision Pro are only possible through
           groundbreaking Apple technology. Displays the size of a postage stamp

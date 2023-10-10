@@ -12,9 +12,9 @@ function Page23() {
           <h1>Revolutionary dual‑chip performance.</h1>
           <p>
             A unique dual‑chip design enables the spatial experiences on Apple
-            Vision Pro. The powerful <span class="highlight-page23">M2</span> chip simultaneously runs visionOS,
+            Vision Pro. The powerful <span className="highlight-page23">M2</span> chip simultaneously runs visionOS,
             executes advanced computer vision algorithms, and delivers stunning
-            graphics, all with incredible efficiency. And the brand-new <span class="highlight-page23">R1</span> chip
+            graphics, all with incredible efficiency. And the brand-new <span className="highlight-page23">R1</span> chip
             is specifically dedicated to process input from the cameras,
             sensors, and microphones, streaming images to the displays within 12
             milliseconds — for a virtually lag-free, real-time view of the

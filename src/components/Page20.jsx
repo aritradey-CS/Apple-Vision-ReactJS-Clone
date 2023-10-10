@@ -6,7 +6,7 @@ function Page20() {
     <div id="page20">
         <video
           src="https://www.apple.com/105/media/us/apple-vision-pro/2023/7e268c13-eb22-493d-a860-f0637bacb569/anim/spatial-audio/large.mp4"
-          autoplay
+          autoPlay
           loop
           muted
         ></video>
@@ -18,7 +18,7 @@ function Page20() {
           <p>
             Dual-driver audio pods positioned next to each ear deliver
             personalized sound while letting you hear what’s around you.
-            <span class="highlight-page20">Spatial Audio</span> makes sounds
+            <span className="highlight-page20">Spatial Audio</span> makes sounds
             feel like they’re coming from your surroundings. Audio ray tracing
             analyzes your room’s acoustic properties to adapt and match sound to
             your space. And if you want to use headphones with Apple Vision Pro,

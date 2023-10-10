@@ -18,11 +18,11 @@ function Page22() {
       <h1>A sophisticated sensor array.</h1>
       <p>
         A pair of
-        <span class="highlight-page22">high-resolution cameras</span>
+        <span className="highlight-page22">high-resolution cameras</span>
         transmit over one billion pixels per second to the displays so you
         can see the world around you clearly. The system also helps deliver
-        <span class="highlight-page22">precise head and hand tracking</span>
-        and <span class="highlight-page22">real‑time 3D mapping</span>, all
+        <span className="highlight-page22">precise head and hand tracking</span>
+        and <span className="highlight-page22">real‑time 3D mapping</span>, all
         while understanding your hand gestures from a wide range of
         positions.
       </p>

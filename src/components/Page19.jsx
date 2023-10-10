@@ -8,7 +8,7 @@ function Page19() {
           <h1>More pixels than a 4K TV. For each eye.</h1>
           <p>
             The
-            <span class="highlight-page19"
+            <span className="highlight-page19"
               >custom micro‑OLED display system</span
             >
             features 23 million pixels, delivering stunning resolution and
