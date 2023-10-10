@@ -26,8 +26,8 @@ function CanvasAnimation() {
     function files(index) {
       const data = `
       ./media/img/canvas/0000.jpg
-      ./media/img/canvas/0001.jpg
-      
+        ./media/img/canvas/0001.jpg
+        
 ./media/img/canvas/0002.jpg
 ./media/img/canvas/0003.jpg
 ./media/img/canvas/0004.jpg
@@ -257,10 +257,15 @@ function CanvasAnimation() {
       onUpdate: render,
     });
 
-    images[1].onload = render;
+    images[1].onload = () => {
+      render();
+    };
 
     function render() {
-      scaleImage(images[imageSeq.frame], contextRef.current);
+      const img = images[imageSeq.frame];
+      if (img.complete && img.naturalHeight !== 0) {
+        scaleImage(img, contextRef.current);
+      }
     }
 
     function scaleImage(img, ctx) {
