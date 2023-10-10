@@ -32,15 +32,18 @@ function CanvasAnimation() {
 
     const frameCount = imagePaths.length;
 
-    const images = [];
+    const images = Array(frameCount);
 
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.src = imagePaths[i];
       img.onload = () => {
-        setImagesLoaded((prevImagesLoaded) => prevImagesLoaded + 1);
+        setImagesLoaded(imagesLoaded + 1);
+        if (imagesLoaded === frameCount - 1) {
+          render();
+        }
       };
-      images.push(img);
+      images[i] = img;
     }
 
     function render() {
