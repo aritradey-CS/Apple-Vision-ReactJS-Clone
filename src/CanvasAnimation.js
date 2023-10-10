@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function CanvasAnimation() {
   const canvasRef = useRef(null);
+  const contextRef = useRef(null); // Create a ref for the canvas context
 
   useEffect(() => {
     // Initialize gsap and ScrollTrigger
@@ -24,9 +25,9 @@ function CanvasAnimation() {
 
     function files(index) {
       const data = `
-        ./media/img/canvas/0000.jpg
-        ./media/img/canvas/0001.jpg
-        
+      ./media/img/canvas/0000.jpg
+      ./media/img/canvas/0001.jpg
+      
 ./media/img/canvas/0002.jpg
 ./media/img/canvas/0003.jpg
 ./media/img/canvas/0004.jpg
@@ -259,7 +260,7 @@ function CanvasAnimation() {
     images[1].onload = render;
 
     function render() {
-      scaleImage(images[imageSeq.frame], canvas.getContext("2d"));
+      scaleImage(images[imageSeq.frame], contextRef.current);
     }
 
     function scaleImage(img, ctx) {
@@ -291,6 +292,9 @@ function CanvasAnimation() {
       end: "600% top",
       scroller: window,
     });
+
+    // Set the canvas context in the ref
+    contextRef.current = canvas.getContext("2d");
   }, []);
 
   return (
