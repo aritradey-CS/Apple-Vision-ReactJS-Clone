@@ -2,10 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// Import images dynamically
+const importImages = () => {
+  const images = [];
+  for (let i = 0; i < 200; i++) {
+    const image = require(`./media/img/canvas/${String(i).padStart(4, "0")}.jpg`);
+    images.push(image);
+  }
+  return images;
+};
+
 function CanvasAnimation() {
   const canvasRef = useRef(null);
   const contextRef = useRef(null); // Create a ref for the canvas context
-  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const images = importImages(); // Import images dynamically
 
   useEffect(() => {
     // Initialize gsap and ScrollTrigger
@@ -25,31 +36,10 @@ function CanvasAnimation() {
       render();
     }
 
-    // Define an array of image file paths
-    const imagePaths = Array.from({ length: 200 }, (_, i) =>
-      `./media/img/canvas/${String(i).padStart(4, "0")}.jpg`
-    );
-
-    const frameCount = imagePaths.length;
-
-    const images = Array(frameCount);
-
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = imagePaths[i];
-      img.onload = () => {
-        setImagesLoaded(imagesLoaded + 1);
-        if (imagesLoaded === frameCount - 1) {
-          render();
-        }
-      };
-      images[i] = img;
-    }
-
     function render() {
       context.clearRect(0, 0, canvas.width, canvas.height);
       const img = images[imageSeq.frame];
-      if (img && imagesLoaded === frameCount) {
+      if (img) {
         scaleImage(img, context);
       }
     }
@@ -79,7 +69,7 @@ function CanvasAnimation() {
     };
 
     gsap.to(imageSeq, {
-      frame: frameCount - 1,
+      frame: images.length - 1,
       snap: "frame",
       ease: "none",
       scrollTrigger: {
@@ -103,11 +93,12 @@ function CanvasAnimation() {
 
     // Set the canvas context in the ref
     contextRef.current = context;
-  }, [imagesLoaded]);
+    setImagesLoaded(true); // Set imagesLoaded to true after images are loaded
+  }, [images]);
 
   return (
     <div>
-      <canvas ref={canvasRef}></canvas>
+      {imagesLoaded ? <canvas ref={canvasRef}></canvas> : <p>Loading images...</p>}
     </div>
   );
 }
