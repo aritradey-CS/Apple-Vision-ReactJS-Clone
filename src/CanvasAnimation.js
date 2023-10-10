@@ -1,16 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function CanvasAnimation() {
   const canvasRef = useRef(null);
   const contextRef = useRef(null); // Create a ref for the canvas context
+  const [imagesLoaded, setImagesLoaded] = useState(0);
 
   useEffect(() => {
     // Initialize gsap and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
     const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -26,8 +28,8 @@ function CanvasAnimation() {
     function files(index) {
       const data = `
       ./media/img/canvas/0000.jpg
-        ./media/img/canvas/0001.jpg
-        
+      ./media/img/canvas/0001.jpg
+      
 ./media/img/canvas/0002.jpg
 ./media/img/canvas/0003.jpg
 ./media/img/canvas/0004.jpg
@@ -233,15 +235,50 @@ function CanvasAnimation() {
     const frameCount = 199;
 
     const images = [];
-    const imageSeq = {
-      frame: 1,
-    };
 
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.src = files(i);
+      img.onload = () => {
+        setImagesLoaded(imagesLoaded + 1);
+        if (imagesLoaded === frameCount - 1) {
+          render();
+        }
+      };
       images.push(img);
     }
+
+    function render() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      const img = images[imageSeq.frame];
+      if (img && imagesLoaded === frameCount) {
+        scaleImage(img, context);
+      }
+    }
+
+    function scaleImage(img, ctx) {
+      const canvas = ctx.canvas;
+      const hRatio = canvas.width / img.width;
+      const vRatio = canvas.height / img.height;
+      const ratio = Math.min(hRatio, vRatio);
+      const centerShift_x = (canvas.width - img.width * ratio) / 2;
+      const centerShift_y = (canvas.height - img.height * ratio) / 2;
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        img.width,
+        img.height,
+        centerShift_x,
+        centerShift_y,
+        img.width * ratio,
+        img.height * ratio
+      );
+    }
+
+    const imageSeq = {
+      frame: 1,
+    };
 
     gsap.to(imageSeq, {
       frame: frameCount - 1,
@@ -257,38 +294,6 @@ function CanvasAnimation() {
       onUpdate: render,
     });
 
-    images[1].onload = () => {
-      render();
-    };
-
-    function render() {
-      const img = images[imageSeq.frame];
-      if (img.complete && img.naturalHeight !== 0) {
-        scaleImage(img, contextRef.current);
-      }
-    }
-
-    function scaleImage(img, ctx) {
-      const canvas = ctx.canvas;
-      const hRatio = canvas.width / img.width;
-      const vRatio = canvas.height / img.height;
-      const ratio = Math.min(hRatio, vRatio);
-      const centerShift_x = (canvas.width - img.width * ratio) / 2;
-      const centerShift_y = (canvas.height - img.height * ratio) / 2;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(
-        img,
-        0,
-        0,
-        img.width,
-        img.height,
-        centerShift_x,
-        centerShift_y,
-        img.width * ratio,
-        img.height * ratio
-      );
-    }
-
     // Scroll-triggered pinning
     ScrollTrigger.create({
       trigger: canvas,
@@ -299,8 +304,8 @@ function CanvasAnimation() {
     });
 
     // Set the canvas context in the ref
-    contextRef.current = canvas.getContext("2d");
-  }, []);
+    contextRef.current = context;
+  }, [imagesLoaded]);
 
   return (
     <div>
