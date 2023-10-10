@@ -1,10 +1,12 @@
 // Page7.js
 import React from 'react';
 import '../App.css'
+import CanvasAnimation from '../CanvasAnimation';
+
 function Page7() {
   return (
     <div id="page7">
-      <canvas></canvas>
+      <CanvasAnimation />
     </div>
   );
 }
