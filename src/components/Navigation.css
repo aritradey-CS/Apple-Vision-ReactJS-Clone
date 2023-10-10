@@ -1,0 +1,30 @@
+/* Navigation.css */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+    height: 7vh;
+    width: 70vw;
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+  }
+  
+  nav h1 {
+    font-size: 24px; /* Adjust font size as needed */
+    color: #fff; /* Update the color */
+  }
+  
+  nav button {
+    padding: 6px 20px;
+    border-radius: 50px;
+    border: none;
+    font-size: 16px; /* Adjust font size as needed */
+    background-color: #fff; /* Update the color */
+    cursor: pointer;
+  }
+  
