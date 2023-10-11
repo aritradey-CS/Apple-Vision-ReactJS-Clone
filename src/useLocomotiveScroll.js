@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import './uselocomotiveScroll.css'
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import LocomotiveScroll from 'locomotive-scroll';
