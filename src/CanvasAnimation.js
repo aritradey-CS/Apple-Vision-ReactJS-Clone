@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Define a function to import images dynamically
 const importImages = () => {
   const images = [];
   for (let i = 0; i < 200; i++) {
@@ -14,31 +13,12 @@ const importImages = () => {
 
 function CanvasAnimation() {
   const canvasRef = useRef(null);
-  const contextRef = useRef(null);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  const images = importImages();
+  const imageSeq = {
+    frame: 1,
+  };
 
-  // Define the render function
-  function render() {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-
-    if (!canvas) {
-      return;
-    }
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
-    const img = images[imageSeq.frame];
-    if (img) {
-      scaleImage(img, context);
-    }
-  }
-
-  function scaleImage(img, ctx) {
+  const scaleImage = (img, ctx) => {
     const canvas = ctx.canvas;
     const hRatio = canvas.width / img.width;
     const vRatio = canvas.height / img.height;
@@ -56,7 +36,7 @@ function CanvasAnimation() {
       img.width * ratio,
       img.height * ratio
     );
-  }
+  };
 
   useEffect(() => {
     // Initialize gsap and ScrollTrigger
@@ -68,14 +48,42 @@ function CanvasAnimation() {
       return;
     }
 
-    // Define the imageSeq object
-    const imageSeq = {
-      frame: 1,
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const context = canvas.getContext("2d");
+
+    const images = importImages();
+
+    const render = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      const img = images[imageSeq.frame];
+      if (img) {
+        scaleImage(img, context);
+      }
     };
 
-    // ... rest of your code ...
+    gsap.to(imageSeq, {
+      frame: images.length - 1,
+      snap: "frame",
+      ease: "none",
+      scrollTrigger: {
+        scrub: 0.5,
+        trigger: canvas,
+        start: "top top",
+        end: "600% top",
+        scroller: window,
+      },
+      onUpdate: render,
+    });
 
-  }, []);
+    ScrollTrigger.create({
+      trigger: canvas,
+      pin: true,
+      start: "top top",
+      end: "600% top",
+      scroller: window,
+    });
+  }, [imageSeq]);
 
   return (
     <div>
