@@ -14,31 +14,31 @@ const importImages = () => {
 function CanvasAnimation() {
   const canvasRef = useRef(null);
 
-  const imageSeq = {
-    frame: 1,
-  };
-
-  const scaleImage = (img, ctx) => {
-    const canvas = ctx.canvas;
-    const hRatio = canvas.width / img.width;
-    const vRatio = canvas.height / img.height;
-    const ratio = Math.min(hRatio, vRatio);
-    const centerShift_x = (canvas.width - img.width * ratio) / 2;
-    const centerShift_y = (canvas.height - img.height * ratio) / 2;
-    ctx.drawImage(
-      img,
-      0,
-      0,
-      img.width,
-      img.height,
-      centerShift_x,
-      centerShift_y,
-      img.width * ratio,
-      img.height * ratio
-    );
-  };
-
   useEffect(() => {
+    const imageSeq = {
+      frame: 1,
+    };
+
+    const scaleImage = (img, ctx) => {
+      const canvas = ctx.canvas;
+      const hRatio = canvas.width / img.width;
+      const vRatio = canvas.height / img.height;
+      const ratio = Math.min(hRatio, vRatio);
+      const centerShift_x = (canvas.width - img.width * ratio) / 2;
+      const centerShift_y = (canvas.height - img.height * ratio) / 2;
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        img.width,
+        img.height,
+        centerShift_x,
+        centerShift_y,
+        img.width * ratio,
+        img.height * ratio
+      );
+    };
+
     // Initialize gsap and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
@@ -83,7 +83,7 @@ function CanvasAnimation() {
       end: "600% top",
       scroller: window,
     });
-  }, [imageSeq]);
+  }, []);
 
   return (
     <div>
