@@ -1,7 +1,7 @@
 // Page3.js
 import React from 'react';
 import './Page3.css'
-import appleImage from '../media/img/Apple vision image.png';
+import appleImage from '../media/Apple vision image.png';
 
 function Page3() {
   return (

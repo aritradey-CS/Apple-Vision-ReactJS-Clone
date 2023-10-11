@@ -1,18 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const importImages = () => {
-  const images = [];
+  const images = new Array(200);
+
   for (let i = 0; i < 200; i++) {
-    const image = require(`./media/img/canvas/${String(i).padStart(4, "0")}.jpg`);
-    images.push(image);
+    images[i] = new Image();
+    images[i].src = require(`./media/canvas/${String(i).padStart(4, "0")}.jpg`);
   }
+
   return images;
 };
 
 function CanvasAnimation() {
   const canvasRef = useRef(null);
+  const [imagesLoaded, setImagesLoaded] = useState(false); // Define the imagesLoaded state
 
   useEffect(() => {
     const imageSeq = {
@@ -83,11 +86,14 @@ function CanvasAnimation() {
       end: "600% top",
       scroller: window,
     });
+
+    // Set imagesLoaded to true when images have loaded
+    setImagesLoaded(true);
   }, []);
 
   return (
     <div>
-      <canvas ref={canvasRef}></canvas>
+      {imagesLoaded ? <canvas ref={canvasRef}></canvas> : <p>Loading images...</p>}
     </div>
   );
 }
