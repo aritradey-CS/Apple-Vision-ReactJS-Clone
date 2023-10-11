@@ -2,20 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const importImages = () => {
-  const images = new Array(200);
-
-  for (let i = 0; i < 200; i++) {
-    images[i] = new Image();
-    images[i].src = require(`./media/canvas/${String(i).padStart(4, "0")}.jpg`);
-  }
-
-  return images;
-};
+const imageNames = new Array(200).fill(0).map((_, i) => String(i).padStart(4, "0"));
 
 function CanvasAnimation() {
   const canvasRef = useRef(null);
-  const [imagesLoaded, setImagesLoaded] = useState(false); // Define the imagesLoaded state
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
     const imageSeq = {
@@ -55,7 +46,26 @@ function CanvasAnimation() {
     canvas.height = window.innerHeight;
     const context = canvas.getContext("2d");
 
-    const images = importImages();
+    const images = [];
+
+    const loadImage = (imageName) => {
+      const img = new Image();
+      img.src = `/media/canvas/${imageName}.jpg`;
+      console.log("Loading image:", imageName); // Add a log statement to track image loading
+      
+      img.onload = () => {
+        images.push(img);
+        console.log("Loaded image:", imageName); // Log when an image is successfully loaded
+    
+        if (images.length === imageNames.length) {
+          setImagesLoaded(true);
+          console.log("All images loaded.");
+        }
+      };
+    };
+    
+    // Load all images
+    imageNames.forEach(loadImage);
 
     const render = () => {
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -86,9 +96,6 @@ function CanvasAnimation() {
       end: "600% top",
       scroller: window,
     });
-
-    // Set imagesLoaded to true when images have loaded
-    setImagesLoaded(true);
   }, []);
 
   return (
